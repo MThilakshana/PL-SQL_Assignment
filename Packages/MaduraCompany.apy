@@ -1,0 +1,49 @@
+CREATE OR REPLACE PACKAGE BODY MADURA_COMPANY_API AS
+  -- procedure for insert data
+  PROCEDURE insert_data(company_name_    IN VARCHAR2,
+                        company_address_ IN VARCHAR2
+                        
+                        ) IS
+    company_reg_no_ VARCHAR2(50);
+  BEGIN
+    SELECT company_reg_sequence.NEXTVAL INTO company_reg_no_ FROM DUAL;
+    INSERT INTO MADURA_COMPANY_TAB
+      (company_reg_no, company_name, company_address)
+    VALUES
+      (company_reg_no_, company_name_, company_address_);
+  END insert_data;
+
+  -- function to get company name
+  FUNCTION GET_COMPANY_NAME(COMPANY_REG_NO_ IN NUMBER) RETURN VARCHAR2 IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_comp_name IS
+      SELECT company_name
+        FROM madura_company_tab
+       WHERE COMPANY_REG_NO = COMPANY_REG_NO_;
+  BEGIN
+    OPEN get_comp_name;
+    FETCH get_comp_name
+      INTO result_;
+    CLOSE get_comp_name;
+    RETURN result_;
+  END GET_COMPANY_NAME;
+  
+  -- function to get company address
+  FUNCTION GET_COMPANY_ADDRESS(COMPANY_REG_NO_ IN NUMBER) RETURN VARCHAR2 IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_comp_address IS
+      SELECT company_address
+        FROM madura_company_tab
+       WHERE COMPANY_REG_NO = COMPANY_REG_NO_;
+  BEGIN
+    OPEN get_comp_address;
+    FETCH get_comp_address
+      INTO result_;
+    CLOSE get_comp_address;
+    RETURN result_;
+  END GET_COMPANY_ADDRESS;
+
+END MADURA_COMPANY_API;
+/

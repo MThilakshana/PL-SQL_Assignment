@@ -1,0 +1,53 @@
+CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
+
+  -- procedure for insert data
+  PROCEDURE insert_data(container_id_     IN NUMBER DEFAULT NULL,
+                        container_weight_ IN NUMBER,
+                        max_volume_       IN NUMBER,
+                        max_weight_       IN NUMBER,
+                        current_volume_   IN NUMBER,
+                        current_weight_   IN NUMBER,
+                        branch_id_        IN VARCHAR2) IS
+    new_container_id_ NUMBER;
+  BEGIN
+    IF container_id_ IS NOT NULL THEN
+      generated_container_id_ := container_id_;
+    ELSE
+      SELECT container_sequence.NEXTVAL INTO new_container_id_ FROM DUAL;
+    END IF;
+    INSERT INTO madura_container_tab
+      (container_id,
+       container_weight,
+       max_volume,
+       max_weight,
+       current_volume,
+       current_weight,
+       branch_id)
+    VALUES
+      (new_container_id_,
+       container_weight_,
+       max_volume_,
+       max_weight_,
+       current_volume_,
+       current_weight_,
+       branch_id_);
+  END insert_data;
+
+  -- function for get container weight
+  FUNCTION GET_CONTAINER_WEIGHT(CONTAINER_ID_ IN VARCHAR2) RETURN NUMBER IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_cont_weight IS
+      SELECT container_weight
+        FROM madura_container_tab
+       WHERE CONTAINER_ID = CONTAINER_ID_;
+  BEGIN
+    OPEN get_cont_weight;
+    FETCH get_cont_weight
+      INTO result_;
+    CLOSE get_cont_weight;
+    RETURN result_;
+  END GET_CONTAINER_WEIGHT;
+
+END MADURA_CONTAINER_API;
+/

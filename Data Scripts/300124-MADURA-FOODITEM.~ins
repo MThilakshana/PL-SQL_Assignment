@@ -1,0 +1,6 @@
+BEGIN
+    MADURA_FOODITEM_API.insert_data('Item 1', 100, 5, 90, 'Chocolate');
+    MADURA_FOODITEM_API.insert_data('Item 2', 150, 10, 120, 'Cake');
+    MADURA_FOODITEM_API.insert_data('Item 3', 120, 8, 100, 'Toffie');
+END;
+/

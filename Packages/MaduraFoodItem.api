@@ -1,0 +1,17 @@
+CREATE OR REPLACE PACKAGE MADURA_FOODITEM_API AS
+  PROCEDURE insert_data(item_id_       IN VARCHAR2,
+                        available_qty_ IN NUMBER,
+                        scrapped_qty_  IN NUMBER,
+                        receved_qty_   IN NUMBER,
+                        item_name_     IN VARCHAR2);
+                        
+  FUNCTION GET_ITEM_NAME(ITEM_ID_ IN VARCHAR2) RETURN VARCHAR2;
+  
+  FUNCTION GET_AVAILABLE_QUANTITY(ITEM_ID_ IN VARCHAR2) RETURN NUMBER;
+  
+  FUNCTION GET_SCRAPPED_QUANTITY(ITEM_ID_ IN VARCHAR2) RETURN NUMBER;
+  
+  FUNCTION GET_RECEVED_QUANTITY(ITEM_ID_ IN VARCHAR2) RETURN NUMBER;
+  
+END MADURA_FOODITEM_API;
+/

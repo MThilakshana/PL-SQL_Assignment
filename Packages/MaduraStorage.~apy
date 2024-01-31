@@ -1,0 +1,66 @@
+CREATE OR REPLACE PACKAGE BODY MADURA_STORAGE_API AS
+  -- procedure for insert data to storage table
+  PROCEDURE insert_data(item_id_      IN VARCHAR2,
+                        container_id_ IN VARCHAR2,
+                        status_       IN VARCHAR2) IS
+    storage_id_ VARCHAR2(50);
+  BEGIN
+    SELECT storage_sequence.NEXTVAL INTO storage_id_ FROM DUAL;
+  
+    INSERT INTO madura_storage_tab
+      (storage_id, item_id, container_id, status)
+    VALUES
+      (storage_id_, item_id_, container_id_, status_);
+  END insert_data;
+
+  -- function to get status
+  FUNCTION GET_STORAGE_STATUS(CONTAINER_ID_ IN VARCHAR2,
+                              ITEM_ID_      IN VARCHAR2) RETURN VARCHAR2 IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_cont_status IS
+      SELECT status
+        FROM madura_storage_tab
+       WHERE CONTAINER_ID = CONTAINER_ID_ AND ITEM_ID = ITEM_ID_;
+  BEGIN
+    OPEN get_cont_status;
+    FETCH get_cont_status
+      INTO result_;
+    CLOSE get_cont_status;
+    RETURN result_;
+  END GET_STORAGE_STATUS;
+
+  -- function to get item id
+  FUNCTION GET_ITEM_ID(STORAGE_ID_ IN VARCHAR2) RETURN VARCHAR2 IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_itm_id IS
+      SELECT item_id
+        FROM madura_storage_tab
+       WHERE STORAGE_ID = STORAGE_ID_;
+  BEGIN
+    OPEN get_itm_id;
+    FETCH get_itm_id
+      INTO result_;
+    CLOSE get_itm_id;
+    RETURN result_;
+  END GET_ITEM_ID;
+
+  -- function to get container id
+  FUNCTION GET_CONTAINER_ID(STORAGE_ID_ IN VARCHAR2) RETURN VARCHAR2 IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_cont_id IS
+      SELECT container_id
+        FROM madura_storage_tab
+       WHERE STORAGE_ID = STORAGE_ID_;
+  BEGIN
+    OPEN get_cont_id;
+    FETCH get_cont_id
+      INTO result_;
+    CLOSE get_cont_id;
+    RETURN result_;
+  END GET_CONTAINER_ID;
+
+END MADURA_STORAGE_API;
+/

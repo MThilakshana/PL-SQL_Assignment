@@ -1,0 +1,87 @@
+CREATE OR REPLACE PACKAGE BODY MADURA_FOODITEM_API AS
+  -- procedure for insert data to food item table
+  PROCEDURE insert_data(item_id_       IN VARCHAR2,
+                        available_qty_ IN NUMBER,
+                        scrapped_qty_  IN NUMBER,
+                        receved_qty_   IN NUMBER,
+                        item_name_     IN VARCHAR2) IS
+    new_item_id_ VARCHAR2(50);
+  BEGIN
+    IF item_id_ IS NOT NULL THEN
+      new_item_id_ := item_id_;
+    ELSE
+      SELECT fooditem_sequence.NEXTVAL INTO new_item_id_ FROM DUAL;
+    END IF;
+  
+    INSERT INTO madura_fooditem_tab
+      (item_id, available_qty, scrapped_qty, receved_qty, item_name)
+    VALUES
+      (new_item_id_,
+       available_qty_,
+       scrapped_qty_,
+       receved_qty_,
+       item_name_);
+  END insert_data;
+
+  -- function for get item name
+  FUNCTION GET_ITEM_NAME(ITEM_ID_ IN VARCHAR2) RETURN VARCHAR2 IS
+    result_ VARCHAR(200);
+  
+    CURSOR get_item_name IS
+      SELECT item_name FROM madura_fooditem_tab WHERE ITEM_ID = ITEM_ID_;
+  BEGIN
+    OPEN get_item_name;
+    FETCH get_item_name
+      INTO result_;
+    CLOSE get_item_name;
+    RETURN result_;
+  END GET_ITEM_NAME;
+
+  -- function for get available quantity
+  FUNCTION GET_AVAILABLE_QUANTITY(ITEM_ID_ IN VARCHAR2) RETURN NUMBER IS
+    result_ NUMBER;
+  
+    CURSOR get_avl_qty IS
+      SELECT available_qty
+        FROM madura_fooditem_tab
+       WHERE ITEM_ID = ITEM_ID_;
+  BEGIN
+    OPEN get_avl_qty;
+    FETCH get_avl_qty
+      INTO result_;
+    CLOSE get_avl_qty;
+    RETURN result_;
+  END GET_AVAILABLE_QUANTITY;
+
+  -- function for get scrapped quantity
+  FUNCTION GET_SCRAPPED_QUANTITY(ITEM_ID_ IN VARCHAR2) RETURN NUMBER IS
+    result_ NUMBER;
+  
+    CURSOR get_scrp_qty IS
+      SELECT scrapped_qty
+        FROM madura_fooditem_tab
+       WHERE ITEM_ID = ITEM_ID_;
+  BEGIN
+    OPEN get_scrp_qty;
+    FETCH get_scrp_qty
+      INTO result_;
+    CLOSE get_scrp_qty;
+    RETURN result_;
+  END GET_SCRAPPED_QUANTITY;
+
+  -- function for get receved quantity
+  FUNCTION GET_RECEVED_QUANTITY(ITEM_ID_ IN VARCHAR2) RETURN NUMBER IS
+    result_ NUMBER;
+  
+    CURSOR get_recv_qty IS
+      SELECT receved_qty FROM madura_fooditem_tab WHERE ITEM_ID = ITEM_ID_;
+  BEGIN
+    OPEN get_recv_qty;
+    FETCH get_recv_qty
+      INTO result_;
+    CLOSE get_recv_qty;
+    RETURN result_;
+  END GET_RECEVED_QUANTITY;
+
+END MADURA_FOODITEM_API;
+/

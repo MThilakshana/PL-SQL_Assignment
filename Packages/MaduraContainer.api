@@ -1,0 +1,23 @@
+CREATE OR REPLACE PACKAGE MADURA_CONTAINER_API AS
+  PROCEDURE insert_data(container_id_     IN NUMBER DEFAULT NULL,
+                        container_weight_ IN NUMBER,
+                        max_volume_       IN NUMBER,
+                        max_weight_       IN NUMBER,
+                        current_volume_   IN NUMBER,
+						            current_weight_	  IN NUMBER,
+                        branch_id_        IN VARCHAR2);
+                        
+  FUNCTION GET_CONTAINER_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER;
+  
+  FUNCTION GET_CONTAINER_MAX_VOLUME(CONTAINER_ID_ IN VARCHAR2) RETURN NUMBER;
+  
+  FUNCTION GET_MAX_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER;
+  
+  FUNCTION GET_CURRENT_VOLUME(CONTAINER_ID_ IN VARCHAR2) RETURN NUMBER;
+  
+  FUNCTION GET_CURRENT_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER;
+  
+  FUNCTION GET_BRANCH_ID(CONTAINER_ID_ IN NUMBER) RETURN VARCHAR2;
+  
+END MADURA_CONTAINER_API;
+/

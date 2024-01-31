@@ -1,0 +1,6 @@
+BEGIN
+    MADURA_STORAGE_API.insert_data('Item 1', 3, 'Active');
+    MADURA_STORAGE_API.insert_data('Item 2', 2, 'Inactive');
+    MADURA_STORAGE_API.insert_data('Item 3', 1', 'Active');
+END;
+/
