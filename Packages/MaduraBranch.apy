@@ -144,14 +144,14 @@ CREATE OR REPLACE PACKAGE BODY MADURA_BRANCH_API AS
 	result_ NUMBER;
 	
 	CURSOR get_rem_cap IS
-	SELECT ((SELECT SUM(total_warehouse_capacity) as tot_capacity
-				FROM madura_branch_tab
-				WHERE branch_id == branch_id_) - (SELECT SUM(current_volume) as cur_volume
-													FROM madura_container_tab
-													WHEHRE container_id = ( SELECT container_id 
-																			FROM madura_container_tab
-																			WHERE branch_id = branch_id_))) as rem_capacity FROM DUAL;
-																			
+	       MADURA_BRANCH_API.GET_WAREHOUSE_CAPACITY - (SELECT SUM(MAX_VOLUME)
+													                          FROM madura_container_tab
+													                          WHEHRE container_id = ( SELECT container_id 
+                                      																			FROM madura_container_tab
+                                      																			WHERE branch_id = branch_id_ AND item_id = (SELECT item_id
+                                                                                                              FROM madura_storage_tab
+                                                                                                              WHERE status = "Active"));) FROM DUAL;
+                                                                                                              													
 			BEGIN
 				OPEN get_rem_cap;
 				FETCH get_rem_cap

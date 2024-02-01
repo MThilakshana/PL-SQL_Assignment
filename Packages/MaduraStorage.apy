@@ -21,15 +21,15 @@ CREATE OR REPLACE PACKAGE BODY MADURA_STORAGE_API AS
 					) IS
 					
 		BEGIN 
-			UPDATE TABLE madura_storage_tab
+			UPDATE madura_storage_tab
 			SET item_id = item_id_,
 				container_id = container_id_,
 				status = status_
 			WHERE storage_id = storage_id_;
-		END upadte_data;
+		END update_data;
 
   -- procedure for delete data
-  PROCEDURE delete_data(storage_id VARCHAR2) IS
+  PROCEDURE delete_data(storage_id_ VARCHAR2) IS
 	BEGIN	
 		DELETE FROM madura_storage_tab
 		WHERE storage_id = storage_id_;

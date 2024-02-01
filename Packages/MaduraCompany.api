@@ -8,7 +8,7 @@ CREATE OR REPLACE PACKAGE MADURA_COMPANY_API AS
 						company_address_ IN VARCHAR2
 						);
 						
-  PROCEDURE delete_data(company_reg_no_);
+  PROCEDURE delete_data(company_reg_no_ IN NUMBER);
             
   FUNCTION get_company_name(company_reg_no_ IN NUMBER) RETURN VARCHAR2;
   

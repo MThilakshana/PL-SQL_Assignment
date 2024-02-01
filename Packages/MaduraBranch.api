@@ -4,16 +4,16 @@ CREATE OR REPLACE PACKAGE MADURA_BRANCH_API AS
                         branch_manager_           IN VARCHAR2,
                         total_warehouse_capacity_ IN NUMBER,
                         company_reg_no_           IN NUMBER);
-  
-  PROCEDURE update_data(branch_id_ 				  IN VARCHAR2,
-						branch_name_ 			  IN VARCHAR2,
-						branch_address_ 		  IN VARCHAR2,
-						branch_manager_           IN VARCHAR2,
+
+  PROCEDURE update_data(branch_id_                IN VARCHAR2,
+                        branch_name_              IN VARCHAR2,
+                        branch_address_           IN VARCHAR2,
+                        branch_manager_           IN VARCHAR2,
                         total_warehouse_capacity_ IN NUMBER,
                         company_reg_no_           IN NUMBER);
-						
+
   PROCEDURE delete_data(branch_id_ IN VARCHAR2);
-  
+
   FUNCTION GET_BRANCH_NAME(BRANCH_ID_ IN NUMBER) RETURN VARCHAR2;
 
   FUNCTION GET_BRANCH_ADDRESS(BRANCH_ID_ IN NUMBER) RETURN VARCHAR2;
@@ -21,10 +21,10 @@ CREATE OR REPLACE PACKAGE MADURA_BRANCH_API AS
   FUNCTION GET_BRANCH_MANAGER(BRANCH_ID_ IN NUMBER) RETURN VARCHAR2;
 
   FUNCTION GET_WAREHOUSE_CAPACITY(BRANCH_ID_ IN NUMBER) RETURN NUMBER;
-  
+
   FUNCTION GET_REGISTRATION_NUMBER(BRANCH_ID_ IN NUMBER) RETURN NUMBER;
-  
-  FUNCTION GET_REMAINING_CAPACITY(branch_id_ IN VARCHAR2);
+
+  FUNCTION GET_REMAINING_CAPACITY(branch_id_ IN VARCHAR2) RETURN NUMBER;
 
 END MADURA_BRANCH_API;
 /

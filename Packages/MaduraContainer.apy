@@ -7,7 +7,8 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
                         max_weight_       IN NUMBER,
                         current_volume_   IN NUMBER,
                         current_weight_   IN NUMBER,
-                        branch_id_        IN VARCHAR2) IS
+                        branch_id_        IN VARCHAR2,
+                        item_id_          IN VARCHAR2) IS
     new_container_id_ NUMBER;
   BEGIN
     IF container_id_ IS NOT NULL THEN
@@ -22,7 +23,8 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
        max_weight,
        current_volume,
        current_weight,
-       branch_id)
+       branch_id,
+       item_id)
     VALUES
       (new_container_id_,
        container_weight_,
@@ -30,9 +32,10 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
        max_weight_,
        current_volume_,
        current_weight_,
-       branch_id_);
+       branch_id_,
+       item_id_);
   END insert_data;
-  
+
   -- procedure for update data
   PROCEDURE update_data(container_id_     IN NUMBER,
                         container_weight_ IN NUMBER,
@@ -40,23 +43,25 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
                         max_weight_       IN NUMBER,
                         current_volume_   IN NUMBER,
                         current_weight_   IN NUMBER,
-                        branch_id_        IN VARCHAR2) IS
-			BEGIN 
-				UPDATE TABLE madura_container_tab
-				SET container_weight = container_weight_,
-					max_volume = max_volume_,
-					max_weight = max_weight_,
-					current_volume = current_volume_,
-					current_weight = current_weight_,
-					branch_id = branch_id_)
-				WHERE container_id = container_id_;
+                        branch_id_        IN VARCHAR2,
+                        item_id_          IN VARCHAR2) IS
+  BEGIN
+    UPDATE madura_container_tab
+       SET container_weight = container_weight_,
+           max_volume       = max_volume_,
+           max_weight       = max_weight_,
+           current_volume   = current_volume_,
+           current_weight   = current_weight_,
+           branch_id        = branch_id_,
+           item_id          = item_id_
+     WHERE container_id = container_id_;
   END update_data;
-  
+
   -- procedure for delete data
   PROCEDURE delete_data(container_id_ IN NUMBER) IS
-	BEGIN	
-		DELETE FROM madura_container_tab WHERE container_id = container_id_;
-	END delete_data;
+  BEGIN
+    DELETE FROM madura_container_tab WHERE container_id = container_id_;
+  END delete_data;
 
   -- function for get container weight
   FUNCTION GET_CONTAINER_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER IS
@@ -73,7 +78,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
     CLOSE get_cont_weight;
     RETURN result_;
   END GET_CONTAINER_WEIGHT;
-  
+
   -- function for get max volume
   FUNCTION GET_CONTAINER_MAX_VOLUME(CONTAINER_ID_ IN VARCHAR2) RETURN NUMBER IS
     result_ NUMBER;
@@ -89,7 +94,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
     CLOSE get_max_volume;
     RETURN result_;
   END GET_CONTAINER_MAX_VOLUME;
-  
+
   -- function for get max weight
   FUNCTION GET_MAX_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER IS
     result_ NUMBER;
@@ -105,7 +110,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
     CLOSE get_max_wgt;
     RETURN result_;
   END GET_MAX_WEIGHT;
-  
+
   -- function for get current volume
   FUNCTION GET_CURRENT_VOLUME(CONTAINER_ID_ IN VARCHAR2) RETURN NUMBER IS
     result_ NUMBER;
@@ -121,7 +126,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
     CLOSE get_cur_volume;
     RETURN result_;
   END GET_CURRENT_VOLUME;
-  
+
   -- function for get current weight
   FUNCTION GET_CURRENT_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER IS
     result_ NUMBER;
@@ -137,7 +142,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
     CLOSE get_cur_wgt;
     RETURN result_;
   END GET_CURRENT_WEIGHT;
-  
+
   -- function for get branch id
   FUNCTION GET_BRANCH_ID(CONTAINER_ID_ IN NUMBER) RETURN VARCHAR2 IS
     result_ VARCHAR2(100);
@@ -153,6 +158,22 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
     CLOSE get_brnch_id;
     RETURN result_;
   END GET_BRANCH_ID;
+
+  -- function for get item id
+  FUNCTION GET_ITEM_ID(CONTAINER_ID_ IN NUMBER) RETURN VARCHAR2 IS
+    result_ VARCHAR2(100);
+  
+    CURSOR get_itm_id IS
+      SELECT item_id
+        FROM madura_container_tab
+       WHERE CONTAINER_ID = CONTAINER_ID_;
+  BEGIN
+    OPEN get_itm_id;
+    FETCH get_itm_id
+      INTO result_;
+    CLOSE get_itm_id;
+    RETURN result_;
+  END GET_ITEM_ID;
 
 END MADURA_CONTAINER_API;
 /

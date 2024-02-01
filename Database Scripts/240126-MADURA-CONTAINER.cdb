@@ -4,12 +4,13 @@ CREATE TABLE madura_container_tab(
      max_volume NUMBER NOT NULL,
      max_weight NUMBER NOT NULL,
      current_volume NUMBER NOT NULL,
-	   current_weight NUMBER NOT NULL,
+     current_weight NUMBER NOT NULL,
      branch_id VARCHAR2(50) NOT NULL,
-     PRIMARY KEY(container_id,branch_id)
+     item_id VARCHAR2(50) NOT NULL,
+     PRIMARY KEY(container_id,branch_id,item_id)
 );
 
-CREATE container_seq
+CREATE SEQUENCE container_seq
     START WITH 1
     INCREMENT BY 1
     NOCACHE

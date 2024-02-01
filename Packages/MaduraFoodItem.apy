@@ -22,32 +22,31 @@ CREATE OR REPLACE PACKAGE BODY MADURA_FOODITEM_API AS
        receved_qty_,
        item_name_);
   END insert_data;
-  
+
   -- procedure for update data
   PROCEDURE update_data(item_id_       IN VARCHAR2,
                         available_qty_ IN NUMBER,
                         scrapped_qty_  IN NUMBER,
                         receved_qty_   IN NUMBER,
                         item_name_     IN VARCHAR2) IS
-		BEGIN
-			UPDATE TABLE madura_fooditem_tab
-			SET available_qty = available_qty_,
-				scrapped_qty = scrapped_qty_,
-				receved_qty = receved_qty_,
-				item_name = item_name_
-			WHERE item_id = item_id_;
-	END update_data;
-	
-   -- procedure for delete data
-   PROCEDURE delete_data(item_id_ IN VARCHAR2) IS
-	BEGIN
-		DELETE TABLE madura_fooditem_tab
-		WHERE item_id = item_id_
-	END delete_data;
+  BEGIN
+    UPDATE madura_fooditem_tab
+       SET available_qty = available_qty_,
+           scrapped_qty  = scrapped_qty_,
+           receved_qty   = receved_qty_,
+           item_name     = item_name_
+     WHERE item_id = item_id_;
+  END update_data;
+
+  -- procedure for delete data
+  PROCEDURE delete_data(item_id_ IN VARCHAR2) IS
+  BEGIN
+    DELETE madura_fooditem_tab WHERE item_id = item_id_;
+  END delete_data;
 
   -- function for get item name
   FUNCTION GET_ITEM_NAME(ITEM_ID_ IN VARCHAR2) RETURN VARCHAR2 IS
-    result_ VARCHAR(200);
+    result_ VARCHAR2(200);
   
     CURSOR get_item_name IS
       SELECT item_name FROM madura_fooditem_tab WHERE ITEM_ID = ITEM_ID_;
