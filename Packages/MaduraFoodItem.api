@@ -4,6 +4,14 @@ CREATE OR REPLACE PACKAGE MADURA_FOODITEM_API AS
                         scrapped_qty_  IN NUMBER,
                         receved_qty_   IN NUMBER,
                         item_name_     IN VARCHAR2);
+
+  PROCEDURE update_data(item_id_       IN VARCHAR2,
+                        available_qty_ IN NUMBER,
+                        scrapped_qty_  IN NUMBER,
+                        receved_qty_   IN NUMBER,
+                        item_name_     IN VARCHAR2);
+						
+  PROCEDURE delete_data(item_id_ IN VARCHAR2);
                         
   FUNCTION GET_ITEM_NAME(ITEM_ID_ IN VARCHAR2) RETURN VARCHAR2;
   

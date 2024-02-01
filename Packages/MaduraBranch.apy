@@ -23,6 +23,31 @@ CREATE OR REPLACE PACKAGE BODY MADURA_BRANCH_API AS
        total_warehouse_capacity_,
        company_reg_no_);
   END insert_data;
+  
+  -- procedure for update data
+  PROCEDURE update_data(branch_id_ IN VARCHAR2,
+						branch_name_ IN VARCHAR2,
+						branch_address_ IN VARCHAR2,
+						branch_manager_           IN VARCHAR2,
+                        total_warehouse_capacity_ IN NUMBER,
+                        company_reg_no_           IN NUMBER
+  ) IS
+	BEGIN
+		UPDATE TABLE MADURA_BRANCH_TAB 
+		SET branch_name = branch_name_,
+			branch_address = branch_address_,
+			branch_manager = branch_manager_,
+			total_warehouse_capacity = total_warehouse_capacity_,
+			company_reg_no = company_reg_no_
+		WHERE branch_id = branch_id_;
+  END update_data;
+  
+  -- procedure for delete data
+  PROCEDURE delete_data(branch_id_ IN VARCHAR2) IS
+	BEGIN
+		DELETE FROM MADURA_BRANCH_TAB 
+		WHERE branch_id = branch_id_;
+  End delete_data;
 
   -- function for get branch name
   FUNCTION GET_BRANCH_NAME(BRANCH_ID_ IN NUMBER) RETURN VARCHAR2 IS

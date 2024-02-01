@@ -12,6 +12,24 @@ CREATE OR REPLACE PACKAGE BODY MADURA_COMPANY_API AS
     VALUES
       (company_reg_no_, company_name_, company_address_);
   END insert_data;
+  
+  --procedure for update data
+  PROCEDURE update_data(company_reg_no_ IN NUMBER,
+						company_name_ IN VARCHAR2,
+						company_address_ IN VARCHAR2
+						) IS 
+				BEGIN
+					UPDATE MADURA_COMPANY_TAB
+					SET company_name = company_name_, company_address = company_address_
+					WHERE company_reg_no = company_reg_no_;
+	END update_data;
+	
+	---procedure for delete data
+	PROCEDURE delete_data(company_reg_no_ IN NUMBER) IS
+				BEGIN 
+					DELETE FROM MADURA_COMPANY_TAB
+					WHERE company_reg_no = company_reg_no_;
+	END delete_data;
 
   -- function to get company name
   FUNCTION GET_COMPANY_NAME(COMPANY_REG_NO_ IN NUMBER) RETURN VARCHAR2 IS

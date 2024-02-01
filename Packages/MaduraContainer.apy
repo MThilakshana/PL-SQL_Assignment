@@ -32,6 +32,31 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
        current_weight_,
        branch_id_);
   END insert_data;
+  
+  -- procedure for update data
+  PROCEDURE update_data(container_id_     IN NUMBER,
+                        container_weight_ IN NUMBER,
+                        max_volume_       IN NUMBER,
+                        max_weight_       IN NUMBER,
+                        current_volume_   IN NUMBER,
+                        current_weight_   IN NUMBER,
+                        branch_id_        IN VARCHAR2) IS
+			BEGIN 
+				UPDATE TABLE madura_container_tab
+				SET container_weight = container_weight_,
+					max_volume = max_volume_,
+					max_weight = max_weight_,
+					current_volume = current_volume_,
+					current_weight = current_weight_,
+					branch_id = branch_id_)
+				WHERE container_id = container_id_;
+  END update_data;
+  
+  -- procedure for delete data
+  PROCEDURE delete_data(container_id_ IN NUMBER) IS
+	BEGIN	
+		DELETE FROM madura_container_tab WHERE container_id = container_id_;
+	END delete_data;
 
   -- function for get container weight
   FUNCTION GET_CONTAINER_WEIGHT(CONTAINER_ID_ IN NUMBER) RETURN NUMBER IS

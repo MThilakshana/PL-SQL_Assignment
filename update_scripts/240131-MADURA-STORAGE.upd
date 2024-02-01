@@ -1,0 +1,4 @@
+BEGEIN
+	MADURA_STORAGE_API.update_data(1,'Item 1',2,'Inactive');
+END;
+/

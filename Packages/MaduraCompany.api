@@ -2,6 +2,13 @@ CREATE OR REPLACE PACKAGE MADURA_COMPANY_API AS
   PROCEDURE insert_data(company_name_    IN VARCHAR2,
                         company_address_ IN VARCHAR2
 						);
+						
+  PROCEDURE update_data(company_reg_no_ IN NUMBER,
+						company_name_ IN VARCHAR2,
+						company_address_ IN VARCHAR2
+						);
+						
+  PROCEDURE delete_data(company_reg_no_);
             
   FUNCTION get_company_name(company_reg_no_ IN NUMBER) RETURN VARCHAR2;
   

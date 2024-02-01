@@ -1,0 +1,4 @@
+BEGIN
+	MADURA_FOODITEM_API.delete_data('Item 3');
+END;
+/
