@@ -8,7 +8,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
                         current_volume_   IN NUMBER,
                         current_weight_   IN NUMBER,
                         branch_id_        IN VARCHAR2,
-                        item_id_          IN VARCHAR2) IS
+                        company_reg_no_   IN NUMBER) IS
     new_container_id_ NUMBER;
   BEGIN
     IF container_id_ IS NOT NULL THEN
@@ -24,7 +24,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
        current_volume,
        current_weight,
        branch_id,
-       item_id)
+       company_reg_no)
     VALUES
       (new_container_id_,
        container_weight_,
@@ -33,7 +33,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
        current_volume_,
        current_weight_,
        branch_id_,
-       item_id_);
+       company_reg_no_);
   END insert_data;
 
   -- procedure for update data
@@ -44,7 +44,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
                         current_volume_   IN NUMBER,
                         current_weight_   IN NUMBER,
                         branch_id_        IN VARCHAR2,
-                        item_id_          IN VARCHAR2) IS
+                        company_reg_no_   IN NUMBER) IS
   BEGIN
     UPDATE madura_container_tab
        SET container_weight = container_weight_,
@@ -53,7 +53,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
            current_volume   = current_volume_,
            current_weight   = current_weight_,
            branch_id        = branch_id_,
-           item_id          = item_id_
+           company_reg_no   = company_reg_no_
      WHERE container_id = container_id_;
   END update_data;
 
@@ -160,20 +160,20 @@ CREATE OR REPLACE PACKAGE BODY MADURA_CONTAINER_API AS
   END GET_BRANCH_ID;
 
   -- function for get item id
-  FUNCTION GET_ITEM_ID(CONTAINER_ID_ IN NUMBER) RETURN VARCHAR2 IS
+  FUNCTION GET_COMPANY_REG_NO(CONTAINER_ID_ IN NUMBER) RETURN NUMBER IS
     result_ VARCHAR2(100);
   
-    CURSOR get_itm_id IS
-      SELECT item_id
+    CURSOR get_reg_no IS
+      SELECT company_reg_no
         FROM madura_container_tab
        WHERE CONTAINER_ID = CONTAINER_ID_;
   BEGIN
-    OPEN get_itm_id;
-    FETCH get_itm_id
+    OPEN get_reg_no;
+    FETCH get_reg_no
       INTO result_;
-    CLOSE get_itm_id;
+    CLOSE get_reg_no;
     RETURN result_;
-  END GET_ITEM_ID;
+  END GET_COMPANY_REG_NO;
 
 END MADURA_CONTAINER_API;
 /

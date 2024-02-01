@@ -6,7 +6,7 @@ CREATE TABLE madura_container_tab(
      current_volume NUMBER NOT NULL,
      current_weight NUMBER NOT NULL,
      branch_id VARCHAR2(50) NOT NULL,
-     item_id VARCHAR2(50) NOT NULL,
+     company_reg_no NUMBER NOT NULL,
      PRIMARY KEY(container_id,branch_id,item_id)
 );
 

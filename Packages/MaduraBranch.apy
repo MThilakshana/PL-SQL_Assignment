@@ -33,7 +33,7 @@ CREATE OR REPLACE PACKAGE BODY MADURA_BRANCH_API AS
                         company_reg_no_           IN NUMBER
   ) IS
 	BEGIN
-		UPDATE TABLE MADURA_BRANCH_TAB 
+		UPDATE MADURA_BRANCH_TAB 
 		SET branch_name = branch_name_,
 			branch_address = branch_address_,
 			branch_manager = branch_manager_,
@@ -49,6 +49,26 @@ CREATE OR REPLACE PACKAGE BODY MADURA_BRANCH_API AS
 		WHERE branch_id = branch_id_;
   End delete_data;
 
+  
+	-- procedura for display current inventory information
+	PROCEDURE DISPLAY_INVENTORY_INFO(BRANCH_ID_ IN VARCHAR2) IS
+			CURSOR dsp_inv_info IS
+				SELECT ITEM_NAME, AVAILABLE_QTY
+				FROM madura_fooditem_tab
+				WHERE AVAILABLE_QTY>0 AND ITEM_ID IN (SELECT ITEM_ID
+													  FROM madura_storage_tab
+													  WHERE CONTAINER_ID IN (SELECT CONTAINER_ID
+																			  FROM madura_container_tab
+																			  WHERE BRANCH_ID = BRANCH_ID_));
+		BEGIN
+			FOR INVENTORY_RECORD IN dsp_inv_info
+			LOOP
+				DBMS_OUTPUT.PUT_LINE('Item Name - ' || INVENTORY_RECORD.ITEM_NAME || ' : Available Quantity - ' || INVENTORY_RECORD.AVAILABLE_QTY);
+			END LOOP;
+		
+		CLOSE dsp_inv_info;
+	END DISPLAY_INVENTORY_INFO;
+  
   -- function for get branch name
   FUNCTION GET_BRANCH_NAME(BRANCH_ID_ IN NUMBER) RETURN VARCHAR2 IS
     result_ VARCHAR2(200);
@@ -140,17 +160,15 @@ CREATE OR REPLACE PACKAGE BODY MADURA_BRANCH_API AS
   END GET_REGISTRATION_NUMBER;
   
   -- function for get remaining capacity
-  FUNCTION GET_REMAINING_CAPACITY(branch_id_ IN VARCHAR2) RETURN NUMBER IS
+  FUNCTION GET_REMAINING_CAPACITY(BRANCH_ID_ IN VARCHAR2) RETURN NUMBER IS
 	result_ NUMBER;
 	
 	CURSOR get_rem_cap IS
-	       MADURA_BRANCH_API.GET_WAREHOUSE_CAPACITY - (SELECT SUM(MAX_VOLUME)
+	       SELECT (MADURA_BRANCH_API.GET_WAREHOUSE_CAPACITY(BRANCH_ID_)  - (SELECT SUM(MAX_VOLUME)
 													                          FROM madura_container_tab
-													                          WHEHRE container_id = ( SELECT container_id 
-                                      																			FROM madura_container_tab
-                                      																			WHERE branch_id = branch_id_ AND item_id = (SELECT item_id
-                                                                                                              FROM madura_storage_tab
-                                                                                                              WHERE status = "Active"));) FROM DUAL;
+													                          WHERE container_id = ( SELECT container_id 
+                                      																FROM madura_storage_tab
+																									WHERE status = 'Available') AND branch_id = branch_id_)) FROM DUAL;
                                                                                                               													
 			BEGIN
 				OPEN get_rem_cap;

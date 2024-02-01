@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE MADURA_CONTAINER_API AS
                         current_volume_   IN NUMBER,
 						            current_weight_	  IN NUMBER,
                         branch_id_        IN VARCHAR2,
-                        item_id_          IN VARCHAR2);
+                        company_reg_no_   IN NUMBER);
 
   PROCEDURE update_data(container_id_     IN NUMBER,
                         container_weight_ IN NUMBER,
@@ -15,7 +15,7 @@ CREATE OR REPLACE PACKAGE MADURA_CONTAINER_API AS
                         current_volume_   IN NUMBER,
                         current_weight_   IN NUMBER,
                         branch_id_        IN VARCHAR2,
-                        item_id_          IN VARCHAR2);
+                        company_reg_no_   IN NUMBER);
 						
   PROCEDURE delete_data(container_id_ IN NUMBER);
   
@@ -31,7 +31,7 @@ CREATE OR REPLACE PACKAGE MADURA_CONTAINER_API AS
   
   FUNCTION GET_BRANCH_ID(CONTAINER_ID_ IN NUMBER) RETURN VARCHAR2;
   
-  FUNCTION GET_ITEM_ID(CONTAINER_ID_ IN NUMBER) RETURN VARCHAR2;
+  FUNCTION GET_COMPANY_REG_N(CONTAINER_ID_ IN NUMBER) RETURN NUMBER;
   
 END MADURA_CONTAINER_API;
 /
