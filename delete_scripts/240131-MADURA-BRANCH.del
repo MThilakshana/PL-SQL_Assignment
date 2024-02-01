@@ -1,4 +1,0 @@
-BEGIN
-	MADURA_BRANCH_API.delete_data(2);
-END;
-/

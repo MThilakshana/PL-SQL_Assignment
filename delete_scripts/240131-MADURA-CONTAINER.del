@@ -1,4 +1,0 @@
-BEGIN
-	MADURA_CONTAINER_API.delete_data(3);
-END;
-/

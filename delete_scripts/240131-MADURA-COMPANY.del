@@ -1,4 +1,0 @@
-BEGIN
-	MADURA_COMPANY_API.delete_data(2);
-END;
-/
