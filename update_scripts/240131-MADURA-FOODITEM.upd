@@ -1,4 +1,0 @@
-BEGIN
-	MADURA_FOODITEM_API.update_data('Item 1',150,5,100,'Chocolate');
-END;
-/

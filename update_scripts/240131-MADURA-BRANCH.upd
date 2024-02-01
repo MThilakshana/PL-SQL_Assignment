@@ -1,4 +1,0 @@
-BEGIN
-	MADURA_BRANCH_API.update_data(1,'Branch A','Kandy','Manager A1',150,1);
-END;
-/
