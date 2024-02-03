@@ -1,0 +1,21 @@
+CREATE OR REPLACE VIEW madura_branch_capacity_view AS
+SELECT 	BRANCH_ID, 
+	BRANCH_NAME, 
+	TOTAL_WAREHOUSE_CAPACITY,
+	MADURA_BRANCH_AIP.GET_REMAINING_CAPACITY(BRANCH_ID) AS remaining_capacity
+FROM madura_branch_tab;
+
+
+--script
+
+DECLARE
+	user_given_capacity NUMBER := 100;
+	branch_count NUMBER;
+
+BEGIN
+	SELECT COUNT(*) INTO branch_count
+	FROM madura_branch_capacity_view
+	WHERE remaining_capacity > user_given_capacity;
+
+	DBMS_OUTPUT.PUT_LINE('Number of branches - ' || branch_count)
+END;

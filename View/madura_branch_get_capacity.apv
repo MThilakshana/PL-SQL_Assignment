@@ -1,0 +1,17 @@
+CREATE OR REPLACE VIEW madura_fooditem_qty_view AS
+SELECT 
+    b.branch_id,
+    b.branch_name,
+    f.item_id,
+    f.item_name,
+	f.available_qty,
+	f.scrapped_qty,
+	f.receved_qty
+FROM 
+    madura_branch_tab b
+JOIN 
+    madura_container_tab c ON b.branch_id = c.branch_id
+JOIN 
+    madura_storage_tab s ON c.container_id = s.container_id
+JOIN
+	madura_fooditem_tab f ON s.item_id = f.item_id;

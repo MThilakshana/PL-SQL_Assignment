@@ -1,0 +1,8 @@
+CREATE OR REPLACE VIEW madura_branch_capacity_info AS
+SELECT 
+    branch_id,
+    branch_name,
+    total_warehouse_capacity,
+    MADURA_BRANCH_API.GET_REMAINING_CAPACITY(BRANCH_ID) AS remaining_capacity
+FROM 
+    madura_branch_tab;
